@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Snake game</title>
   </head>
-  <body onload="draw();">
-    <canvas id="game" width="741" height="447"></canvas>
+  <body>
+    <!-- onload="draw();" -->
+    <div class="start-container">
+      <h1 class="snake-title">Snake</h1>
+      <br />
+      <p class="start-text">
+        1. Use keyboard arrows<br /><br />2. Don't hit walls.<br /><br />3.
+        Don't eat yourself.<br />
+      </p>
+      <br />
+      <p class="snake-high-score-text">High-score</p>
+      <br />
+      <p class="snake-high-score">0</p>
+      <button class="menu-play-button" onClick="playGame()">Play</button>
+    </div>
+    <div class="game-container">
+      <p class="text">score <span class="result">0</span></p>
+      <canvas id="game" width="741" height="447"></canvas>
+    </div>
+    <div class="gameOver-container">
+      <h1 class="gameOver-title">Game Over</h1>
+      <div class="bestPlayer"></div>
+      <button class="gameOver_playAgain" onClick="playGame()">
+        Play Again
+      </button>
+    </div>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-data">
+          <p class="year">2023</p>
+          <a
+            class="Mygithub"
+            href="https://github.com/DenisovaSS"
+            target="_blank"
+            >MYGITHUB</a
+          >
+        </div>
+        <a
+          class="logoRss"
+          href="https://rs.school/js-stage0/"
+          target="_blank"
+        ></a>
+      </div>
+    </footer>
   </body>
   <script src="javaS.js"></script>
 </html>

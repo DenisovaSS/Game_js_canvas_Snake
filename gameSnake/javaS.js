@@ -1,13 +1,15 @@
 const canvas = document.getElementById("game");
+const snakeScore = document.querySelector(".result");
+const startContainer = document.querySelector(".start-container");
+const gameContainer = document.querySelector(".game-container");
+const gameOverContainer = document.querySelector(".gameOver-container");
 const ctx = canvas.getContext("2d");
 const ground = new Image();
 ground.src = "img/pol.png";
 const foodS = new Image();
 foodS.src = "img/f.png";
 let step = 29;
-console.log(52 + step * Math.floor(Math.random() * 21));
 let score = 0;
-// console.log(Math.floor(Math.random() * 21) * step);
 let foodCoord = {
   x: 52 + step * Math.floor(Math.random() * 22),
   y: 65 + step * Math.floor(Math.random() * 11),
@@ -17,8 +19,39 @@ snake[0] = {
   x: 52 + step * 11,
   y: 65 + step * 5,
 };
-document.addEventListener("keydown", move);
 let movedir;
+visibleStartMenu();
+function playGame() {
+  if (game) {
+    clearInterval(game);
+  }
+  snakeScore.textContent = 0;
+  score = 0;
+  snake = [];
+  snake[0] = {
+    x: 52 + step * 11,
+    y: 65 + step * 5,
+  };
+  visibleGame();
+  game = setInterval(draw, 300);
+}
+
+function visibleStartMenu() {
+  startContainer.classList.remove("start-container_hide");
+  gameOverContainer.classList.add("gameOver-container_hide");
+}
+function visibleGame() {
+  startContainer.classList.add("start-container_hide");
+  gameOverContainer.classList.add("gameOver-container_hide");
+}
+function visibleGameOver() {
+  startContainer.classList.add("start-container_hide");
+  gameOverContainer.classList.remove("gameOver-container_hide");
+}
+
+//lisener for start move
+document.addEventListener("keydown", move);
+
 function move(e) {
   if (e.keyCode == 37 && movedir != "right") {
     movedir = "left";
@@ -30,13 +63,16 @@ function move(e) {
     movedir = "down";
   }
 }
+
 function eatTail(head, tail) {
   for (let i = 0; i < tail.length; i++) {
     if (head.x == tail[i].x && head.y == tail[i].y) {
       clearInterval(game);
+      visibleGameOver();
     }
   }
 }
+
 function draw() {
   ctx.drawImage(ground, 0, 0);
   ctx.drawImage(foodS, foodCoord["x"], foodCoord["y"]);
@@ -44,16 +80,21 @@ function draw() {
     ctx.fillStyle = i == 0 ? "rgb(65, 65, 65)" : "rgb(111, 117, 89)";
     ctx.fillRect(snake[i].x, snake[i].y, step, step);
   }
-  ctx.fillStyle = "rgb(253, 254, 220)";
-  ctx.font = "30px serif";
-  ctx.fillText("score: ", step * 1.4, step * 1.4);
-  ctx.fillStyle = "rgb(253, 254, 220)";
-  ctx.font = "30px serif";
-  ctx.fillText(score, step * 4, step * 1.5);
+  //draw text
+  // ctx.fillStyle = "rgb(253, 254, 220)";
+  // ctx.font = "20px 'Press Start 2P', cursive";
+  // ctx.fillText("score: ", step * 1.4, step * 1.5);
+  // ctx.fillStyle = "rgb(253, 254, 220)";
+  // ctx.font = "25px 'Press Start 2P', cursive";
+  // ctx.fillText(score, step * 5.5, step * 1.6);
+
   let SnakeX = snake[0].x;
   let SnakeY = snake[0].y;
+
   if (SnakeX == foodCoord["x"] && SnakeY == foodCoord["y"]) {
     score++;
+    snakeScore.textContent = score;
+    console.log(score);
     foodCoord = {
       x: 52 + step * Math.floor(Math.random() * 22),
       y: 65 + step * Math.floor(Math.random() * 11),
@@ -66,8 +107,10 @@ function draw() {
     SnakeX > 52 + step * 21 ||
     SnakeY < 65 ||
     SnakeY > 65 + step * 11
-  )
+  ) {
     clearInterval(game);
+    visibleGameOver();
+  }
 
   if (movedir == "left") SnakeX -= step;
   if (movedir == "right") SnakeX += step;
@@ -80,4 +123,4 @@ function draw() {
   eatTail(newHead, snake);
   snake.unshift(newHead);
 }
-let game = setInterval(draw, 120);
+let game = setInterval(draw, 300);

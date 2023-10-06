@@ -3,6 +3,7 @@
   --letter-color: rgb(253, 254, 220);
   --stroke-color: rgb(111, 117, 89);
 }
+/* font-family: 'Press Start 2P', cursive;; */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,12 +12,144 @@
 body {
   background-color: var(--dark-color);
 }
+.game-container {
+  display: block;
+  width: 741px;
+  margin: 70px auto;
+  height: 100%;
+}
 canvas {
   display: block;
-  margin: 70px auto;
-}
-img {
-  display: block;
   margin: 0 auto;
-  color: #fff;
+}
+
+.text {
+  font-family: "Press Start 2P", cursive;
+  font-size: 50px;
+  margin-left: 22px;
+  color: var(--letter-color);
+  text-shadow: 2px 2px 2px rgb(111, 117, 89), 0 2px 2px rgb(111, 117, 89),
+    -2px 0 2px rgb(111, 117, 89), 0 -2px 2px rgb(111, 117, 89);
+}
+.start-container {
+  font-family: "Press Start 2P", cursive;
+  color: var(--letter-color);
+  text-shadow: 2px 2px 2px rgb(111, 117, 89), 0 2px 2px rgb(111, 117, 89),
+    -2px 0 2px rgb(111, 117, 89), 0 -2px 2px rgb(111, 117, 89);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgb(65, 65, 65);
+}
+.snake-title {
+  font-size: 60px;
+  margin-bottom: 40px;
+}
+.snake-high-score-text {
+  margin-top: 30px;
+  font-size: 25px;
+  color: white;
+}
+.snake-high-score {
+  font-size: 25px;
+  color: white;
+}
+
+.menu-play-button {
+  margin-top: 20px;
+  font-size: 40px;
+  font-family: "Press Start 2P";
+  background-color: transparent;
+  border: none;
+  color: var(--letter-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.menu-play-button:hover,
+.gameOver_playAgain:hover {
+  color: var(--stroke-color);
+}
+.gameOver-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Press Start 2P", cursive;
+  color: var(--letter-color);
+  text-shadow: 2px 2px 2px rgb(111, 117, 89), 0 2px 2px rgb(111, 117, 89),
+    -2px 0 2px rgb(111, 117, 89), 0 -2px 2px rgb(111, 117, 89);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(65, 65, 65);
+}
+.gameOver_playAgain {
+  margin-top: 20px;
+  font-size: 40px;
+  font-family: "Press Start 2P";
+  background-color: transparent;
+  border: none;
+  color: var(--letter-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+footer {
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-data {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logoRss {
+  width: 135px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(img/rs_school_js.svg);
+  transition: 0.3s;
+}
+.Mygithub,
+.year {
+  text-decoration: none;
+  font-size: 25px;
+  padding: 0 20px;
+  transition: 0.3s;
+  color: #000000;
+  font-family: monospace;
+}
+.Mygithub:hover {
+  cursor: pointer;
+  color: var(--letter-color);
+}
+.logoRss:hover {
+  filter: invert(75%) drop-shadow(16px 16px 20px #f22c04e3);
+  /* drop-shadow(16px 16px 20px #f22c04e3); */
+}
+
+.start-container_hide,
+.gameOver-container_hide {
+  display: none;
+}
+@media (max-width: 900px) {
+  .game-container {
+    margin: 0px auto;
+  }
 }
