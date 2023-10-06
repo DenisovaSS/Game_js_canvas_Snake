@@ -3,6 +3,8 @@ const snakeScore = document.querySelector(".result");
 const startContainer = document.querySelector(".start-container");
 const gameContainer = document.querySelector(".game-container");
 const gameOverContainer = document.querySelector(".gameOver-container");
+const theBestScore = document.querySelector(".snake-high-score");
+const listForBest = document.querySelector(".bestPlayer");
 const ctx = canvas.getContext("2d");
 const ground = new Image();
 ground.src = "img/pol.png";
@@ -20,7 +22,10 @@ snake[0] = {
   y: 65 + step * 5,
 };
 let movedir;
+let r = [];
+const myKey = "bestOfTheBestPlayer";
 visibleStartMenu();
+
 function playGame() {
   if (game) {
     clearInterval(game);
@@ -35,7 +40,21 @@ function playGame() {
   visibleGame();
   game = setInterval(draw, 300);
 }
-
+function best(item) {
+  let hight = JSON.parse(localStorage.getItem(myKey)) || [];
+  hight.push(item);
+  hight.sort((a, b) => b - a);
+  hight = hight.slice(0, 10);
+  localStorage.setItem(myKey, JSON.stringify(hight));
+}
+let finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
+theBestScore.textContent = finalArray[0];
+finalArray.forEach((onePic, index) => {
+  const list = `<ul class="listForBest">
+        <li> score${index}: ${onePic}</li>   
+</ul> `;
+  listForBest.insertAdjacentHTML("beforeend", list);
+});
 function visibleStartMenu() {
   startContainer.classList.remove("start-container_hide");
   gameOverContainer.classList.add("gameOver-container_hide");
@@ -69,6 +88,7 @@ function eatTail(head, tail) {
     if (head.x == tail[i].x && head.y == tail[i].y) {
       clearInterval(game);
       visibleGameOver();
+      best(score);
     }
   }
 }
@@ -110,6 +130,7 @@ function draw() {
   ) {
     clearInterval(game);
     visibleGameOver();
+    best(score);
   }
 
   if (movedir == "left") SnakeX -= step;
@@ -124,3 +145,26 @@ function draw() {
   snake.unshift(newHead);
 }
 let game = setInterval(draw, 300);
+//
+//
+//
+
+// let a = 11,
+//   b = 8,
+//   c = 10,
+//   d = 12;
+// function best(item) {
+
+//   let hight = JSON.parse(localStorage.getItem(myKey)) || [];
+//   hight.push(item);
+//   hight.sort((a, b) => b - a);
+//   hight = hight.slice(0, 3);
+//   localStorage.setItem(myKey, JSON.stringify(hight));
+// }
+
+// best(a);
+// best(b);
+// best(c);
+// best(d);
+// let finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
+// console.log(finalArray);
