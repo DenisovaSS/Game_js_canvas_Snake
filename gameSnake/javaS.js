@@ -48,13 +48,17 @@ function best(item) {
   localStorage.setItem(myKey, JSON.stringify(hight));
 }
 let finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
-theBestScore.textContent = finalArray[0];
-finalArray.forEach((onePic, index) => {
-  const list = `<ul class="listForBest">
-        <li> score${index}: ${onePic}</li>   
+function finalResultForBestPlayers(arr) {
+  listForBest.innerHTML = "";
+  arr.forEach((onePic, index) => {
+    const list = `<ul class="listForBest">
+        <li> player${index + 1}: ${onePic}</li>   
 </ul> `;
-  listForBest.insertAdjacentHTML("beforeend", list);
-});
+    listForBest.insertAdjacentHTML("beforeend", list);
+  });
+}
+
+theBestScore.textContent = finalArray[0];
 function visibleStartMenu() {
   startContainer.classList.remove("start-container_hide");
   gameOverContainer.classList.add("gameOver-container_hide");
@@ -87,8 +91,10 @@ function eatTail(head, tail) {
   for (let i = 0; i < tail.length; i++) {
     if (head.x == tail[i].x && head.y == tail[i].y) {
       clearInterval(game);
-      visibleGameOver();
       best(score);
+      finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
+      finalResultForBestPlayers(finalArray);
+      visibleGameOver();
     }
   }
 }
@@ -129,8 +135,10 @@ function draw() {
     SnakeY > 65 + step * 11
   ) {
     clearInterval(game);
-    visibleGameOver();
     best(score);
+    finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
+    finalResultForBestPlayers(finalArray);
+    visibleGameOver();
   }
 
   if (movedir == "left") SnakeX -= step;
