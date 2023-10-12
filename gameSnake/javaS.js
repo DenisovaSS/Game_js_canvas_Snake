@@ -129,8 +129,12 @@ function draw() {
   ctx.drawImage(ground, 0, 0);
   ctx.drawImage(foodS, foodCoord["x"], foodCoord["y"]);
   for (let i = 0; i < snake.length; i++) {
-    ctx.fillStyle = i == 0 ? "rgb(65, 65, 65)" : "rgb(111, 117, 89)";
+    ctx.fillStyle = i == 0 ? "rgb(0, 0, 0)" : "rgb(58, 63, 41)";
     ctx.fillRect(snake[i].x, snake[i].y, step, step);
+    ctx.fillStyle = "rgb(194, 202, 161)";
+    ctx.fillRect(snake[i].x + 3, snake[i].y + 3, step - 6, step - 6);
+    ctx.fillStyle = i == 0 ? "rgb(0, 0, 0)" : "rgb(58, 63, 41)";
+    ctx.fillRect(snake[i].x + 7, snake[i].y + 7, step - 14, step - 14);
   }
 
   let SnakeX = snake[0].x;
@@ -140,7 +144,6 @@ function draw() {
     playEat();
     score++;
     snakeScore.textContent = score;
-    console.log(score);
     foodCoord = {
       x: 52 + step * Math.floor(Math.random() * 22),
       y: 65 + step * Math.floor(Math.random() * 11),
