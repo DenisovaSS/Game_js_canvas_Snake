@@ -14,6 +14,12 @@
   </head>
   <body>
     <!-- onload="draw();" -->
+    <audio id="eatApple">
+      <source src="muz/eat.mp3" type="audio/mp3" />
+    </audio>
+    <audio id="break">
+      <source src="muz/break2.mp3" type="audio/mp3" />
+    </audio>
     <div class="start-container">
       <h1 class="snake-title">Snake</h1>
       <br />
@@ -22,10 +28,17 @@
         eat yourself<br />
       </p>
       <br />
+      <div>
+        <button class="menu-play-button" onClick="startGameEasy()">EASY</button>
+        <button class="menu-play-button" onClick="startGameNormal()">
+          NORMAL
+        </button>
+        <button class="menu-play-button" onClick="startGameHard()">HARD</button>
+      </div>
+      <br />
       <p class="snake-high-score-text">High-score</p>
       <br />
       <p class="snake-high-score">0</p>
-      <button class="menu-play-button" onClick="playGame()">Play</button>
     </div>
     <div class="game-container">
       <p class="text">score <span class="result">0</span></p>
@@ -33,10 +46,12 @@
     </div>
     <div class="gameOver-container">
       <h1 class="gameOver-title">Game Over</h1>
-      <div class="bestPlayer"></div>
+
       <button class="gameOver_playAgain" onClick="playGame()">
         Play Again
       </button>
+      <p class="bestPlayer_title">Best players</p>
+      <ul class="bestPlayer"></ul>
     </div>
     <footer>
       <div class="footer-container">

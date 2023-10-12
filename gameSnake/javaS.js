@@ -5,6 +5,8 @@ const gameContainer = document.querySelector(".game-container");
 const gameOverContainer = document.querySelector(".gameOver-container");
 const theBestScore = document.querySelector(".snake-high-score");
 const listForBest = document.querySelector(".bestPlayer");
+const eat = document.getElementById("eatApple");
+const breakSnake = document.getElementById("break");
 const ctx = canvas.getContext("2d");
 const ground = new Image();
 ground.src = "img/pol.png";
@@ -23,9 +25,30 @@ snake[0] = {
 };
 let movedir;
 let r = [];
-const myKey = "bestOfTheBestPlayer";
+const myKey = "bestOfTheBestPlayer_denissova";
 visibleStartMenu();
 
+function playEat() {
+  eat.play();
+  eat.volume = 0.3;
+}
+function playBreak() {
+  breakSnake.play();
+  breakSnake.volume = 0.3;
+}
+let n = 400;
+function startGameEasy() {
+  n = 300;
+  playGame();
+}
+function startGameNormal() {
+  n = 150;
+  playGame();
+}
+function startGameHard() {
+  n = 90;
+  playGame();
+}
 function playGame() {
   if (game) {
     clearInterval(game);
@@ -38,22 +61,24 @@ function playGame() {
     y: 65 + step * 5,
   };
   visibleGame();
-  game = setInterval(draw, 300);
+  game = setInterval(draw, n);
 }
 function best(item) {
-  let hight = JSON.parse(localStorage.getItem(myKey)) || [];
-  hight.push(item);
-  hight.sort((a, b) => b - a);
-  hight = hight.slice(0, 10);
-  localStorage.setItem(myKey, JSON.stringify(hight));
+  if (item > 0) {
+    let hight = JSON.parse(localStorage.getItem(myKey)) || [];
+    hight.push(item);
+    hight.sort((a, b) => b - a);
+    hight = hight.slice(0, 10);
+    localStorage.setItem(myKey, JSON.stringify(hight));
+  }
 }
 let finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
 function finalResultForBestPlayers(arr) {
   listForBest.innerHTML = "";
-  arr.forEach((onePic, index) => {
-    const list = `<ul class="listForBest">
-        <li> player${index + 1}: ${onePic}</li>   
-</ul> `;
+  arr.forEach((onePic) => {
+    const list = `
+        <li> Player - ${onePic}</li>   
+`;
     listForBest.insertAdjacentHTML("beforeend", list);
   });
 }
@@ -90,6 +115,7 @@ function move(e) {
 function eatTail(head, tail) {
   for (let i = 0; i < tail.length; i++) {
     if (head.x == tail[i].x && head.y == tail[i].y) {
+      playBreak();
       clearInterval(game);
       best(score);
       finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
@@ -106,18 +132,12 @@ function draw() {
     ctx.fillStyle = i == 0 ? "rgb(65, 65, 65)" : "rgb(111, 117, 89)";
     ctx.fillRect(snake[i].x, snake[i].y, step, step);
   }
-  //draw text
-  // ctx.fillStyle = "rgb(253, 254, 220)";
-  // ctx.font = "20px 'Press Start 2P', cursive";
-  // ctx.fillText("score: ", step * 1.4, step * 1.5);
-  // ctx.fillStyle = "rgb(253, 254, 220)";
-  // ctx.font = "25px 'Press Start 2P', cursive";
-  // ctx.fillText(score, step * 5.5, step * 1.6);
 
   let SnakeX = snake[0].x;
   let SnakeY = snake[0].y;
 
   if (SnakeX == foodCoord["x"] && SnakeY == foodCoord["y"]) {
+    playEat();
     score++;
     snakeScore.textContent = score;
     console.log(score);
@@ -132,8 +152,9 @@ function draw() {
     SnakeX < 52 ||
     SnakeX > 52 + step * 21 ||
     SnakeY < 65 ||
-    SnakeY > 65 + step * 11
+    SnakeY > 65 + step * 10.5
   ) {
+    playBreak();
     clearInterval(game);
     best(score);
     finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
@@ -154,25 +175,3 @@ function draw() {
 }
 let game = setInterval(draw, 300);
 //
-//
-//
-
-// let a = 11,
-//   b = 8,
-//   c = 10,
-//   d = 12;
-// function best(item) {
-
-//   let hight = JSON.parse(localStorage.getItem(myKey)) || [];
-//   hight.push(item);
-//   hight.sort((a, b) => b - a);
-//   hight = hight.slice(0, 3);
-//   localStorage.setItem(myKey, JSON.stringify(hight));
-// }
-
-// best(a);
-// best(b);
-// best(c);
-// best(d);
-// let finalArray = JSON.parse(localStorage.getItem(myKey)) || [];
-// console.log(finalArray);
